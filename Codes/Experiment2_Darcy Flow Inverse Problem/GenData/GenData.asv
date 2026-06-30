@@ -1,0 +1,47 @@
+%%
+clear; close all; clc
+
+% define parameters
+K1 = 64;
+K2 = 64;
+N = 100;
+
+% define parameters for random field a and F
+alpha = 2;
+tau = 3;
+F = ones(K1,1);
+
+% define solution grid
+% [X1,Y1] = meshgrid(1/(2*K1):1/K1:(2*K1-1)/(2*K1),1/(2*K1):1/K1:(2*K1-1)/(2*K1)); % spatial locations on which the noise is being evaluated
+X1 = 1/(2*K1):1/K1:(2*K1-1)/(2*K1);
+% define measurement grid, (we will refine this further)
+% [X2,Y2] = meshgrid(0:1/(K2-1):1,0:1/(K2-1):1);
+X2 = 0:1/(K2-1):1;
+
+
+% define arrays to store results
+x = zeros(N,K1);
+sol = zeros(N,K2);
+
+for j=1:N
+    tic
+    % generate log-normal input
+    a = exp(gaussrnd(alpha,tau,K1));
+    u = solve_gwf(a,F);
+    %figure; contour(X1,Y1,u); hold on; plot(X2,Y2,'.r','MarkerSize',10)
+    u = interp2(X1,Y1,u,X2,Y2,'spline');
+    % save results
+    x(j,:,:) = log(a);
+    sol(j,:,:) = u;
+    disp(j);
+    toc
+end
+  
+% reduce dimension of sol
+sol = sol(:,4:8:end,4:8:end);
+
+
+y = sol;
+
+% save final
+save('./../../../Data/Experiment2/darcy_data_64by64_data','x','y','-v7.3')
