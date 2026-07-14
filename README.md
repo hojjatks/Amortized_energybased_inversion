@@ -36,7 +36,7 @@ Two optional diagnostic dependencies are used only by non-canonical exploratory 
 
 **MATLAB** (Experiment 2 data generation only): `Codes/Experiment2_Darcy Flow Inverse Problem/GenData/*.m` requires MATLAB with the base Signal Processing functionality for `idct`. Any recent MATLAB release (R2020a or later) should work.
 
-**Hardware/runtime:** FNO training (Experiments 2–3) was run on a single H100 GPU; Experiment 2 training takes on the order of an hour, Experiment 3 several hours, per configuration in Table 1. Data generation is the dominant cost: Experiment 2's `GenData.m` solves 10⁶ Darcy problems, and Experiment 3's `sample_joint.py` solves 2×10⁶ wave-equation problems (each a few thousand explicit timesteps) — both can take multiple days on a single core. **For this reason, the generated data and trained checkpoints are provided directly (see below) rather than requiring regeneration.**
+
 
 ## Data & Models availability
 
