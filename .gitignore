@@ -1,0 +1,7 @@
+# Bulk data and trained model checkpoints are distributed separately
+# (Zenodo archive / SISC supplementary materials), not via git history.
+Data/
+Models/
+
+# Regenerated figure outputs
+Figs/
