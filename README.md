@@ -58,7 +58,7 @@ If you would rather regenerate the data than download it, the generation scripts
 
 ## Figure and table reproduction guide
 
-All figure numbers below are inferred from the order figures appear in the paper's LaTeX source (SIAM's `onefignum` numbers figures sequentially). This gives 9 figures, while the arXiv abstract metadata reports 10 — please cross-check figure numbers against the camera-ready PDF before finalizing; the script/output-filename mapping itself has been verified directly against the LaTeX `\includegraphics` calls and is not affected by any off-by-one numbering issue. `Codes/` paths are given relative to the repository root.
+All figure numbers below are inferred from the order figures appear in the paper. 
 
 ### Table 1 — Training and model settings
 
@@ -94,14 +94,6 @@ Reproduced directly by the hyperparameters hard-coded in the training scripts li
 | Fig. 8 (`fig:exp3_modes`, KL-mode comparison) | `Codes/Experiment3_Wave Equation Inverse Problem/Inference.ipynb` | With `use_cm=True`, `iteration_data=-6`; saves `Figs/Experiment7/modes_grid_T_CM_ONCMTrue_iteration--6.png`. |
 | Fig. 9 (`fig:exp3_wass`, Cameron–Martin ablation) | `Codes/Experiment3_Wave Equation Inverse Problem/PlotWass.ipynb` | Renamed `Exp3_wasserstein_per_mode.png` for the manuscript. |
 
-## Known limitations & non-canonical code
-
-For transparency, the following are present in the repository but are **not** part of the reproduction path above:
-
-- **`Codes/Experiment2_Darcy Flow Inverse Problem/ML_inference_copied.ipynb`** and its references to `Data/Experiment2` (an earlier 2D Darcy formulation, 64×64 grid) — superseded by the 1D formulation used in the paper. The underlying data no longer exists and this notebook cannot be rerun.
-- **`Codes/Experiment3_Wave Equation Inverse Problem/PlotIterations.ipynb`** — an earlier variant of `PlotIterationsLatent.ipynb` with a different iteration set; not the one used for Fig. 7.
-- **`Codes/Experiment1_Tractable_Non-Gaussian_Posterior/Scaling/scaling.py`, `scaling2.py`, `scaling_data.py`, `scaling_models_data_two_losses_wrt_numpar.py`** (and its replot companion `replot_param_scaling.py`) — earlier drafts and a parameter-count scaling study; the parameter-scaling figure was cut from the final paper (it survives only as a commented-out figure in the LaTeX source), so this script is exploratory only.
-- **Non-determinism:** `GenData.m` (Experiment 2, MATLAB) does not fix a random seed, so re-running it will draw a different (but statistically equivalent) dataset than the one provided in `Data/Experiment3/`. The pCN sampler in `Codes/Experiment2_Darcy Flow Inverse Problem/pCN/*.ipynb` also draws its proposal noise from an unseeded generator (only the observation noise is seeded), so re-running it reproduces the posterior distribution but not the exact deposited chain. Neural network training uses fixed PyTorch/NumPy seeds but does not enable `torch.use_deterministic_algorithms`, so GPU-trained checkpoints may differ slightly (not bit-for-bit) from `Models/` if retrained.
 
 ## License
 
